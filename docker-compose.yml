@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  ia-agent:
+    container_name: ia-agent
+    build: .
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    command: python src/app.py 0.0.0.0:85
+    ports:
+      - "1400:85"
+    volumes:
+      - .:/ia-agent
+    environment:
+      FLASK_DEBUG: development

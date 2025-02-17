@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }
+        #chat-container { max-width: 600px; margin: 50px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        #messages { height: 400px; overflow-y: auto; margin-bottom: 20px; }
+        .message { padding: 10px; margin: 5px 0; border-radius: 10px; }
+        .user-message { background-color: #007bff; color: white; text-align: right; }
+        .bot-message { background-color: #f1f1f1; text-align: left; }
+        #user-input { width: calc(100% - 120px); padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        #send-button { padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+        #send-button:hover { background-color: #0056b3; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <div>
+            <input id="user-input" type="text" placeholder="Escribe un mensaje..." />
+            <button id="send-button">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const sendButton = document.getElementById("send-button");
+        const userInput = document.getElementById("user-input");
+        const messages = document.getElementById("messages");
+
+        // Función para enviar el mensaje del usuario
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                // Mostrar mensaje del usuario en el chat
+                messages.innerHTML += `<div class="message user-message">${message}</div>`;
+                userInput.value = ''; // Limpiar el campo de entrada
+                scrollToBottom();
+
+                // Enviar el mensaje al servidor
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mensaje: message })
+                });
+
+                const data = await response.json();
+                const botReply = data.respuesta;
+                const botReplyHtml = marked.parse(botReply);
+                // Mostrar la respuesta del bot
+                messages.innerHTML += `<div class="message bot-message">${botReplyHtml}</div>`;
+                scrollToBottom();
+            }
+        }
+
+        // Función para desplazar el chat hacia abajo
+        function scrollToBottom() {
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        sendButton.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+flask
+pandas
+openai==0.28
+requests
+python-decouple
+python-dotenv==0.21.0

@@ -9,6 +9,7 @@ API_URL = config("API_URL")
 # Configuración de APIs
 FB_ACCESS_TOKEN = config("FB_ACCESS_TOKEN")
 FB_VERIFY_TOKEN = config("FB_VERIFY_TOKEN")
+WP_URL = config("WP_URL")
 
 
 # Comparar dos perfumes
@@ -640,7 +641,23 @@ def generar_comparacion_ia(texto_comparacion):
     else:
         print("Failed to fetch data from API. Status Code:", response.status_code)
         return None
-
+    
+def send_message_wp(chat_id, text):
+    """
+    Send message to chat_id.
+    :param chat_id: Phone number + "@c.us" suffix - 1231231231@c.us
+    :param text: Message for the recipient
+    """
+    # Send a text back via WhatsApp HTTP API
+    response = requests.post(
+        WP_URL,
+        json={
+            "chatId": chat_id,
+            "text": text,
+            "session": "default",
+        },
+    )
+    response.raise_for_status()
 
 # Procesar mensajes de Facebook e Instagram
 def procesar_mensaje_fb(msg):

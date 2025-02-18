@@ -43,7 +43,10 @@ Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas:
 
    Asegúrate de configurar las credenciales de las APIs de Waha, Facebook y Instagram en los archivos correspondientes (`.env`, etc.).
 
-3. **Construir y levantar los contenedores Docker**:
+3. **Configurar funcionamiento**:
+    sientete libre de modificar la funcion [generar_comparacion_ia](https://github.com/cocolizo945/ia-agent/blob/master/src/agent.py#L14) para que tu chatbot tenga la informacion que requiera y asi pueda responderte de forma coherente a tus necesidades.
+
+4. **Construir y levantar los contenedores Docker**:
 
    Ejecuta el siguiente comando para construir la imagen Docker y levantar los contenedores:
 
@@ -53,7 +56,7 @@ Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas:
 
    Este comando construirá la imagen de Docker y levantará los contenedores necesarios para ejecutar la aplicación, incluyendo el servidor web Flask.
 
-4. **Acceder al chatbot**:
+5. **Acceder al chatbot**:
 
    Una vez que los contenedores estén corriendo, puedes acceder al chatbot a través de los siguientes canales:
    

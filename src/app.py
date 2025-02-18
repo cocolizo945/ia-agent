@@ -49,23 +49,18 @@ def whatsapp_webhook():
     data = request.get_json()
     print(data)
     if data["event"] != "message":
-        # We can't process other event yet
         return f"Unknown event {data['event']}"
 
-    # Payload that we've got
     payload = data["payload"]
-    # The text
     text = payload.get("body")
     if not text:
-        # We can't process non-text messages yet
         print("No text in message")
         print(payload)
         return "OK"
-    # Number in format 1231231231@c.us or @g.us for group
     chat_id = payload["from"]
-    # Message ID - false_11111111111@c.us_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     message_id = payload['id']
-    # IMPORTANT - Always send seen before sending new message
+    participant = payload.get('participant')
+    agent.send_seen_wp(chat_id=chat_id, message_id=message_id, participant=participant)
     respuesta = agent.procesar_mensaje_fb({"message": {"text": text}})
 
     agent.send_message(chat_id=chat_id, text=respuesta)
@@ -73,7 +68,6 @@ def whatsapp_webhook():
     # Send OK back
     return "OK"
 
-# Iniciar servidor
 def main():
       app.run(debug=True, host="0.0.0.0", port=85)
 

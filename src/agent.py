@@ -6,13 +6,11 @@ from decouple import config
 
 API_KEY = config("API_KEY")
 API_URL = config("API_URL")
-# Configuración de APIs
 FB_ACCESS_TOKEN = config("FB_ACCESS_TOKEN")
 FB_VERIFY_TOKEN = config("FB_VERIFY_TOKEN")
 WP_URL = config("WP_URL")
 
 
-# Comparar dos perfumes
 def generar_comparacion_ia(texto_comparacion):
     print(texto_comparacion)
     headers = {
@@ -20,7 +18,6 @@ def generar_comparacion_ia(texto_comparacion):
     'Content-Type': 'application/json'
     }
 
-# Define the request payload (data)
     productos = [
     {
         "Código": "TPM430003-3015",
@@ -630,10 +627,9 @@ def generar_comparacion_ia(texto_comparacion):
         ]
     }
 
-# Send the POST request to the DeepSeek API
     response = requests.post(API_URL, json=data, headers=headers)
     data2 = response.json()
-    # Check if the request was successful
+
     if response.status_code == 200:
         
         print("API Response:", response.json())
@@ -648,7 +644,6 @@ def send_message_wp(chat_id, text):
     :param chat_id: Phone number + "@c.us" suffix - 1231231231@c.us
     :param text: Message for the recipient
     """
-    # Send a text back via WhatsApp HTTP API
     response = requests.post(
         WP_URL,
         json={
@@ -659,16 +654,25 @@ def send_message_wp(chat_id, text):
     )
     response.raise_for_status()
 
-# Procesar mensajes de Facebook e Instagram
+def send_seen_wp(chat_id, message_id, participant):
+    response = requests.post(
+        WP_URL,
+        json={
+            "session": "default",
+            "chatId": chat_id,
+            "messageId": message_id,
+            "participant": participant,
+        },
+    )
+    response.raise_for_status()
+
 def procesar_mensaje_fb(msg):
-    # Extraer y convertir el mensaje a minúsculas
     texto = msg["message"]["text"].lower()
     
     if "comparar" in texto:
         palabras = texto.split()
         if len(palabras) >=3:
             try:
-                 # Comparar los perfumes y devolver la comparación
                 
                 return generar_comparacion_ia(texto)
             except Exception as e:
@@ -677,11 +681,10 @@ def procesar_mensaje_fb(msg):
     elif "comprar" in texto:
         return "¡Claro! ¿Qué perfume te interesa comprar? Te ayudaremos con el proceso."
     
-    # Si no se encuentra "comparar" ni "comprar", generar una comparación IA
     return generar_comparacion_ia(texto)
 
 
-# Enviar mensaje a Facebook Messenger
+
 def enviar_mensaje_facebook(user_id, texto):
     url = f"https://graph.facebook.com/v18.0/me/messages"
     headers = {"Content-Type": "application/json"}

@@ -1,6 +1,3 @@
-Gracias por la aclaración. Aquí tienes la versión actualizada del README sin la mención de SQLite:
-
----
 
 # Chatbot Multicanal agente de ia
 

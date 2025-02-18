@@ -67,12 +67,3 @@ Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas:
 - **Facebook/Instagram**: Los mensajes enviados a la página de Facebook o perfil de Instagram conectados al chatbot recibirán respuestas automáticas.
 - **Web**: Accede a la interfaz web en `http://localhost:1400/` para interactuar directamente con el chatbot.
 
-## Contribución
-
-Si deseas contribuir a este proyecto, por favor sigue estos pasos:
-
-1. Haz un fork de este repositorio.
-2. Crea una rama nueva (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza los cambios y haz un commit (`git commit -am 'Agrega nueva funcionalidad'`).
-4. Haz push a tu rama (`git push origin feature/nueva-funcionalidad`).
-5. Abre un pull request para que tus cambios sean revisados.

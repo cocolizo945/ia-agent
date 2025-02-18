@@ -5,7 +5,6 @@ import agent
 
 app = Flask(__name__)
 
-FB_ACCESS_TOKEN = config("FB_ACCESS_TOKEN")
 FB_VERIFY_TOKEN = config("FB_VERIFY_TOKEN")
 
 @app.route("/webhook", methods=["GET", "POST"])

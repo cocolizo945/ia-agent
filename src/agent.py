@@ -7,7 +7,6 @@ from decouple import config
 API_KEY = config("API_KEY")
 API_URL = config("API_URL")
 FB_ACCESS_TOKEN = config("FB_ACCESS_TOKEN")
-FB_VERIFY_TOKEN = config("FB_VERIFY_TOKEN")
 WP_URL = config("WP_URL")
 
 

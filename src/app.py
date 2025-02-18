@@ -47,7 +47,7 @@ def whatsapp_webhook():
         return "WhatsApp Echo Bot is ready!"
 
     data = request.get_json()
-    pprint(data)
+    print(data)
     if data["event"] != "message":
         # We can't process other event yet
         return f"Unknown event {data['event']}"

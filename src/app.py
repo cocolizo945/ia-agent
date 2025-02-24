@@ -21,7 +21,7 @@ def webhook():
             for event in entry["messaging"]:
                 if "message" in event:
                     user_id = event["sender"]["id"]
-                    respuesta = agent.procesar_mensaje_fb(event)
+                    respuesta = agent.procesar_mensaje(event)
                     agent.enviar_mensaje_facebook(user_id, respuesta)
         return "OK", 200
 
@@ -34,7 +34,7 @@ def index():
 def chat():
     datos = request.get_json()
     mensaje = datos.get("mensaje", "").lower()
-    respuesta = agent.procesar_mensaje_fb({"message": {"text": mensaje}})
+    respuesta = agent.procesar_mensaje({"message": {"text": mensaje}})
     return jsonify({"respuesta": respuesta})
 
 
@@ -60,7 +60,7 @@ def whatsapp_webhook():
     message_id = payload['id']
     participant = payload.get('participant')
     agent.send_seen_wp(chat_id=chat_id, message_id=message_id, participant=participant)
-    respuesta = agent.procesar_mensaje_fb({"message": {"text": text}})
+    respuesta = agent.procesar_mensaje({"message": {"text": text}})
 
     agent.send_message(chat_id=chat_id, text=respuesta)
 

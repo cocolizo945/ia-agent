@@ -1340,7 +1340,7 @@ def procesar_mensaje(msg):
         else:
             return "🤔 No encontré un código postal en tu mensaje. ¿Podrías proporcionarlo? con la siguiente notacion 'envio a codigo postal' "
     
-    return responder_redes(texto)
+    return generar_comparacion_ia(texto)
 
 
 
